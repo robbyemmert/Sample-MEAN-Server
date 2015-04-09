@@ -1,11 +1,8 @@
 {
   "name": "testproject",
   "version": "1.0.0",
-  "description": "",
+  "description": "A sample MEAN server",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Robby Emmert @ Our Daily Bread Ministries",
   "license": "MIT",
   "dependencies": {
