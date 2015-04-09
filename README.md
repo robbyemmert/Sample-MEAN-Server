@@ -13,7 +13,8 @@ for an up-to-date intro to gulp.
 3. Start the server  
 `gulp up`
 
-###Dependencies:
+###Dependencies:  
+Install them all with `npm install` (see instructions above).  
 - Express: *A server framework for Node JS*  
 Build your own web server, just add water. Can (but doesn't have to) take the place of Nginx/Apache/etc. See http://expressjs.com/ for more info.
 - Gulp: *A task runner*  
