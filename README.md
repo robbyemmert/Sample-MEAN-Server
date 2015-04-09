@@ -13,6 +13,12 @@ for an up-to-date intro to gulp.
 3. Start the server  
 `gulp up`
 
+###Documentation:
+- `gulpfile.js`: Where everything begins.
+- `server/*`: All server-related code goes in here
+- `server/express.js`: The code for the Express server.  You can add your own routing/configuration here.
+- `client/*`: All front-end code and public resources go in here (html, css, images, etc.).
+
 ###Dependencies:  
 Install them all with `npm install` (see instructions above).  
 - Express: *A server framework for Node JS*  
