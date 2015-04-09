@@ -1,0 +1,17 @@
+{
+  "name": "testproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robby Emmert @ Our Daily Bread Ministries",
+  "license": "MIT",
+  "dependencies": {
+    "connect-livereload": "^0.5.3",
+    "express": "^4.12.3",
+    "gulp": "^3.8.11",
+    "gulp-live-server": "0.0.11"
+  }
+}
