@@ -1,11 +1,11 @@
 var express = require('express');
+var config = require('./config.js');
 
 // Create an express server called 'app'
 var app = express();
 
 // Configure the server
-app.use(express.static('client'));  // This serves everything in the client folder as static content (sort of like Nginx's www folder);
-app.use(require('connect-livereload')());
+config.configureApp(app);
 
 // Run server
 var server = app.listen(3000, function () {
