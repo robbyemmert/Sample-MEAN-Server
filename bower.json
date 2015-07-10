@@ -1,0 +1,23 @@
+{
+  "name": "Sample-MEAN-Server",
+  "version": "0.0.0",
+  "homepage": "https://github.com/robbyemmert/Sample-MEAN-Server",
+  "authors": [
+    "Robby <remmert@rbc.org>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.15"
+  }
+}

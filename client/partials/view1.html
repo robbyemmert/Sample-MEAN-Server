@@ -1,0 +1,11 @@
+<da-navbar name="name">Robby</da-navbar>
+<div class="container">
+    <h2>View 1</h2>
+    Name:
+    <br />
+    <input type="text" ng-model="name" /> {{ name }}
+    <br />
+    <ul>
+        <li ng-repeat="cust in customers | filter:name | orderBy: 'city'">{{ cust.name }} - {{cust.city}}</li>
+    </ul>
+</div>
