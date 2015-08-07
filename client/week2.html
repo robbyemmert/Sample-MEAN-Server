@@ -7,7 +7,7 @@
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script>
-    var app = angular.module('demoApp', ['ui.router']);
+    var app = angular.module('demoApp', ['ui.router', 'directiveLib']);
 
     app.config(function($stateProvider, $urlRouterProvider){
         $urlRouterProvider.otherwise("/");
@@ -22,6 +22,11 @@
             url: "/view2",
             templateUrl: "partials/view2.html",
             controller: 'SimpleController'
+        })
+        .state('todo', {
+            url: "/todo",
+            templateUrl: "partials/todo.html",
+            controller: 'TodoController'
         })
     });
 
@@ -63,11 +68,34 @@
         return factory;
     })
 
-    app.controller('SimpleController', function($scope, simpleFactory) {
+    app.controller('SimpleController', function($scope, simpleFactory, Todos) {
         $scope.customers = simpleFactory.getCustomers();
-
+        $scope.todos = Todos;
         $scope.somefunc = function(){
             something != undefined;
+        }
+    });
+
+    app.factory('Todos', function(){
+        return [
+            {title: "Build a todo app", done: false}
+        ]
+    })
+
+    app.controller('TodoController', function($scope, Todos){
+        $scope.todos = Todos;
+
+        $scope.addTodo = function(){
+            $scope.todos.push({
+                title: $scope.newTodo, done: false
+            });
+            $scope.newTodo = "";
+        }
+
+        $scope.clearCompleted = function(){
+            $scope.todos = $scope.todos.filter(function(item){
+                return !item.done;
+            })
         }
     });
 

@@ -1,0 +1,20 @@
+<navbar></navbar>
+<style>
+    .done{
+        text-decoration: line-through;
+        color: #ccc;
+    }
+</style>
+<div ng-controller="TodoController">
+    <form name="frm" ng-submit="addTodo()">
+        <input type="text" name="newTodo" ng-model="newTodo" required />
+        <button ng-disabled="frm.$invalid">Go</button>
+    </form>
+    <button ng-click="clearCompleted()">Clear Completed</button>
+    <ul>
+        <li ng-repeat="todo in todos">
+            <input type="checkbox" ng-model="todo.done" />
+            <span ng-class="{'done': todo.done}">{{todo.title}}</span>
+        </li>
+    </ul>
+</div>
