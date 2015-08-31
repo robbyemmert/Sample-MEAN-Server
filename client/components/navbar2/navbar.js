@@ -7,7 +7,7 @@ angular.module('demoApp')
             name: "=name"
         },
         link: function(scope, element){
-            scope.name = element.text()
+            
         }
     }
 })
