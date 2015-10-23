@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="partials/customers.css" />
+    <link rel="stylesheet" href="partials/video-campaign.css" />
 
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -13,6 +14,13 @@
     <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script>
     var app = angular.module('demoApp', ['ui.router']);
+
+    app.config(function($sceDelegateProvider){
+        $sceDelegateProvider.resourceUrlWhitelist([
+            "*://*.youtube.com/*",
+            "*://youtube.com/*"
+        ])
+    })
 
     app.config(function($stateProvider, $urlRouterProvider){
         $urlRouterProvider.otherwise("/");
@@ -32,6 +40,11 @@
             url: "/customers",
             templateUrl: "partials/customers.html",
             controller: 'CustomerController'
+        })
+        .state('video-campaign', {
+            url: "/videos",
+            templateUrl: "partials/video-campaign.html",
+            controller: "VideoCampaignController"
         })
     });
 
@@ -152,6 +165,30 @@
             something != undefined;
         }
     });
+
+    app.controller('VideoCampaignController', function($scope, $sce){
+        $scope.videos = [
+            {
+                title: "Rick Roll",
+                url: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            }, {
+                title: "Trololol",
+                url: "https://www.youtube.com/embed/2Z4m4lnjxkY"
+            }, {
+                title: "Keyboard Cat",
+                url: "https://www.youtube.com/embed/J---aiyznGQ"
+            }, {
+                title: "GoPro Video",
+                url: "https://player.vimeo.com/video/121319106"
+            }
+        ]
+
+        $scope.mainVideo = $scope.videos[0];
+
+        $scope.getTrustedUrl = function(url){
+            return $sce.trustAsResourceUrl(url);
+        }
+    })
 
     app.controller('CustomerController', function($scope, Customers){
         Customers.load();
