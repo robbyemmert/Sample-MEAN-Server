@@ -59,14 +59,46 @@
 
         factory.create = function(customer){
             //send customer to api
+            factory.list.push(customer);
+            var promise = $http.post('/api/customer', customer);
+
+            promise.then(function(response){
+                // Saved
+                console.log('Saved ' + customer.name + " to the server.");
+            })
         }
 
         factory.update = function(customer){
+            for (var i = 0; i < factory.list.length; i++) {
+                if (customer.id == factory.list[i].id) {
+                    factory.list[i] = customer;
+                }
+            }
+
             // save customer to api
+            var promise = $http.post('/api/customer/' + customer.id, customer);
+
+            promise.then(function(response){
+                // Saved
+                console.log('Updated ' + customer.name + " on the server.");
+            })
         }
 
         factory.delete = function(id){
-            // Delete customer from api
+            for (var i = 0; i < factory.list.length; i++) {
+                if (id == factory.list[i].id) {
+                    var deletedCustomer = factory.list[i];
+                    factory.list.splice(i, 1);
+                    console.log("Deleted " + deletedCustomer.name);
+                }
+            }
+            var promise = $http.post('/api/customer/' + id + '/delete');
+
+            promise.then(function(response){
+                console.log('Customer ' + id + " has been deleted from the server");
+            });
+
+            return promise;
         }
 
         factory.load = function(){
@@ -93,25 +125,25 @@
         window.Customers = Customers;
     })
 
-    app.factory("simpleFactory", function(){
-        var customers = [{
-            name: 'John Smith',
-            city: 'Grand Rapids'
-        }, {
-            name: 'John Doe',
-            city: 'Detroit'
-        }, {
-            name: 'Jane Doe',
-            city: 'Lowell'
-        }];
-
-        var factory = {};
-        factory.getCustomers = function() {
-            return customers;
-        }
-
-        return factory;
-    })
+    // app.factory("simpleFactory", function(){
+    //     var customers = [{
+    //         name: 'John Smith',
+    //         city: 'Grand Rapids'
+    //     }, {
+    //         name: 'John Doe',
+    //         city: 'Detroit'
+    //     }, {
+    //         name: 'Jane Doe',
+    //         city: 'Lowell'
+    //     }];
+    //
+    //     var factory = {};
+    //     factory.getCustomers = function() {
+    //         return customers;
+    //     }
+    //
+    //     return factory;
+    // })
 
     app.controller('SimpleController', function($scope, simpleFactory) {
         $scope.customers = simpleFactory.getCustomers();
@@ -123,6 +155,7 @@
 
     app.controller('CustomerController', function($scope, Customers){
         Customers.load();
+        window.scope = $scope;  //DEBUGGING ONLY
         $scope.customers = Customers;
         $scope.newCustomer = {};
         $scope.isEditing = false;
@@ -140,6 +173,31 @@
         $scope.clearText = function(){
 
             return $scope.isEditing ? "Delete" : "Clear";
+        }
+
+        $scope.save = function(customer){
+            // This is how you should do it but we're REBELS!
+            // if (customer.id) {
+            //     // Update
+            // } else {
+            //     // Create
+            // }
+
+            if ($scope.isEditing) {
+                // Old Customer
+                $scope.customers.update(customer);
+            } else {
+                // New Customer
+                $scope.customers.create(customer);
+            }
+            $scope.addCustomer();
+        }
+
+        $scope.delete = function(id){
+            if(id && $scope.isEditing){
+                $scope.customers.delete(id);
+            }
+            $scope.addCustomer();
         }
     })
 

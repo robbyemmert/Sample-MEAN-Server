@@ -6,7 +6,15 @@
     </div>
     <div class="row">
         <div class="col-sm-4 list-group">
-            <div ng-repeat="cust in customers.list" class="customer list-group-item" ng-class="{active: $parent.newCustomer.id == cust.id}" ng-click="editCustomer(cust)">
+            <div class="list-group-item">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search" ng-model="searchCustomer">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="searchCustomer = ''">Clear</button>
+                    </span>
+                </div>
+            </div>
+            <div ng-repeat="cust in customers.list | filter: searchCustomer: name | orderBy: 'name'" class="customer list-group-item" ng-class="{active: $parent.newCustomer.id == cust.id}" ng-click="editCustomer(cust)">
                 {{cust.name}}
             </div>
             <div class="list-group-item add-customer" ng-class="{active: !isEditing}" ng-click="addCustomer()">
@@ -14,7 +22,7 @@
             </div>
         </div>
         <div class="col-sm-8">
-            <form>
+            <form ng-submit="save(newCustomer)">
                 <div class="form-group">
                     <input type="text" placeholder="Name" class="form-control" ng-model="newCustomer.name">
                 </div>
@@ -25,12 +33,9 @@
                     <input type="text" placeholder="Id" class="form-control" ng-model="newCustomer.id">
                 </div>
                 <button type="submit" class="btn btn-primary pull-right">Save</button>
-                <button class="btn pull-left" ng-class="{'btn-danger': isEditing, 'btn-warning': !isEditing}">{{ clearText() }}</button>
+                <button type="button" ng-click="delete(newCustomer.id)" class="btn pull-left" ng-class="{'btn-danger': isEditing, 'btn-warning': !isEditing}">{{ clearText() }}</button>
                 <div class="clearfix"></div>
             </form>
-            <pre>
-                {{ newCustomer }}
-            </pre>
         </div>
     </div>
 </div>
